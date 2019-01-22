@@ -1,0 +1,121 @@
+[colors]
+background = #222
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+[bar/primary]
+monitor = HDMI-0
+monitor-fallback = eDP
+locale = ru_RU.UTF-8
+
+; Tell the Window Manager not to configure the window.
+; Use this to detach the bar if your WM is locking its size/position.
+;override-redirect = true
+
+width = 100%
+height = 27
+
+module-margin = 2
+
+modules-left = i3
+modules-center = time
+modules-right = cpu memory
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 2
+line-color = #f00
+
+font-0 = Terminus:pixelsize=10;2
+font-1 = Icons:pixelsize=12;3
+
+tray-position = right
+
+; Pad the sides of each tray icon
+tray-padding = 4
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+
+; Sort the workspaces by index instead of the default
+; sorting that groups the workspaces by output
+index-sort = true
+
+; Wrap around when reaching the first/last workspace
+wrapping-scroll = false
+
+; mode = WM mode label
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:40:...%
+
+[module/time]
+type = internal/date
+interval = 2.0
+date = %H:%M
+date-alt = %a %d %b %Y
+
+[module/date]
+type = internal/date
+interval = 60
+date = %d %B %Y
+
+[module/pulseaudio]
+type = internal/pulseaudio
+use-ui-max = false
+label-muted =  muted
+label-muted-foreground = #666
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+format-prefix = "CPU "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage:02%%
+
+[module/memory]
+type = internal/memory
+interval = 3
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %gb_used%
+
+[settings]
+; Reload upon receiving XCB_RANDR_SCREEN_CHANGE_NOTIFY events
+screenchange-reload = true
+
+; vim:ft=dosini

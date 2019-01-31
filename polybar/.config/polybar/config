@@ -2,7 +2,7 @@
 background = #222
 background-alt = #444
 foreground = #dfdfdf
-foreground-alt = #555
+foreground-alt = #666
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -12,18 +12,16 @@ monitor = HDMI-0
 monitor-fallback = eDP
 locale = ru_RU.UTF-8
 
-; Tell the Window Manager not to configure the window.
-; Use this to detach the bar if your WM is locking its size/position.
-;override-redirect = true
-
 width = 100%
 height = 27
+
+padding-right = 2
 
 module-margin = 2
 
 modules-left = i3
 modules-center = time
-modules-right = cpu memory
+modules-right = cpu memory filesystem battery volume
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -31,8 +29,10 @@ foreground = ${colors.foreground}
 line-size = 2
 line-color = #f00
 
-font-0 = Terminus:pixelsize=10;2
-font-1 = Icons:pixelsize=12;3
+font-0 = Terminus:antialias=false:pixelsize=10;2
+font-1 = Symbols Nerd Font:antialias=false:pixelsize=10;3
+;font-1 = FontAwesome:antialias=false:pixelsize=10;3
+;font-2 = Icons:antialias=true:pixelsize=14;3
 
 tray-position = right
 
@@ -87,18 +87,21 @@ label = %title:0:40:...%
 type = internal/date
 interval = 2.0
 date = %H:%M
-date-alt = %a %d %b %Y
+date-alt = %{F#666}%a%{F-} %d %b %Y
 
-[module/date]
-type = internal/date
-interval = 60
-date = %d %B %Y
-
-[module/pulseaudio]
+[module/volume]
 type = internal/pulseaudio
 use-ui-max = false
+
+;format-volume = <ramp-volume> <label-volume>
+format-volume =  <label-volume>
+
 label-muted =  muted
 label-muted-foreground = #666
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
 
 [module/cpu]
 type = internal/cpu
@@ -113,6 +116,54 @@ interval = 3
 format-prefix = "RAM "
 format-prefix-foreground = ${colors.foreground-alt}
 label = %gb_used%
+
+[module/filesystem]
+type = internal/fs
+
+mount-0 = /
+
+; Seconds to sleep between updates
+; Default: 30
+interval = 20
+
+; Display fixed precision values
+; Default: false
+fixed-values = false
+
+; Available tokens:
+;   %mountpoint%
+;   %type%
+;   %fsname%
+;   %percentage_free%
+;   %percentage_used%
+;   %total%
+;   %free%
+;   %used%
+; Default: %mountpoint% %percentage_free%%
+label-mounted = %{F#666}%mountpoint%%{F-} %used%
+
+[module/battery]
+type = internal/battery
+
+; This is useful in case the battery never reports 100% charge
+;full-at = 99
+
+; Use the following command to list batteries and adapters:
+; $ ls -1 /sys/class/power_supply/
+battery = BAT1
+adapter = ACAD
+
+format-discharging = <ramp-capacity> <label-discharging>
+format-charging = %{F#666}<ramp-capacity>%{F-} <label-charging>
+format-full = %{F#666} <label-full>%{F-}
+
+label-charging = %percentage%%+
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
 
 [settings]
 ; Reload upon receiving XCB_RANDR_SCREEN_CHANGE_NOTIFY events

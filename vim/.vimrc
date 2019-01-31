@@ -7,6 +7,7 @@ set langmenu=en_US.UTF-8
 set mouse=a
 
 " Mouse handling for the terminal that emits SGR-styled mouse reporting.
+" Fixes scrolling in st.
 " See :h ttymouse and https://github.com/vim/vim/issues/2419.
 set ttymouse=sgr
 
@@ -28,6 +29,12 @@ set nu
 set listchars=tab:··
 set list
 
+" highlight current line
+set cursorline
+
+" reload file on change
+set autoread
+
 colorscheme solarized8
 " https://github.com/lifepillar/vim-solarized8
 
@@ -40,12 +47,15 @@ if has("gui_running")
   set guioptions-=T         " disable toolbar
 endif
 
-" highlight current line
-set cursorline
-
-" автоматически обновлять файл при его изменении
-set autoread
-
-" Automatically re-read config
+" automatically re-read config
 autocmd! bufwritepost ~/.vim/vimrc source ~/.vim/vimrc
 
+" always show status line
+set laststatus=2
+
+" disable mode indicator since we have lightline
+set noshowmode
+
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ }

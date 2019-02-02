@@ -144,7 +144,7 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # lock screen
-bindsym $mod+Shift+z exec --no-startup-id /usr/bin/slock
+bindsym --release $mod+Shift+z exec --no-startup-id /usr/bin/slock
 
 # increase sound volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -211,7 +211,7 @@ for_window [class="Gnome-calculator"] floating enable
 for_window [class="Pamac-manager"] floating enable
 
 exec --no-startup-id ~/.bin/detect-monitors.sh
-exec --no-startup-id autolock -time 5 -locker slock
+exec --no-startup-id xautolock -time 5 -locker /usr/bin/slock
 exec --no-startup-id /usr/bin/feh --bg-fill "/home/ttt/Изображения/beat-schuler-175124-unsplash.jpg"
 exec --no-startup-id polybar primary
 exec --no-startup-id compton --config /dev/null --inactive-dim 0.2 --focus-exclude '_NET_WM_NAME@:s = "rofi"'

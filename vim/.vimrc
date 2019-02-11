@@ -18,13 +18,17 @@ set imsearch=0
 set encoding=utf-8
 set termencoding=utf-8
 
-syntax enable
 set tabstop=8
 set expandtab
 set softtabstop=4
 
 " show line numbers
 set nu
+
+filetype plugin on
+filetype indent on
+
+syntax enable
 
 set listchars=tab:··
 set list

@@ -140,11 +140,6 @@ bindsym $mod+grave scratchpad show
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-# lock screen
-bindsym --release $mod+Shift+z exec --no-startup-id /usr/bin/slock
 
 # increase sound volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -189,6 +184,20 @@ mode "resize" {
 
 # enter the resize mode
 bindsym $mod+r mode "resize"
+
+mode "exit" {
+    bindsym p exec systemctl poweroff
+    bindsym r exec systemctl reboot
+    bindsym s exec systemctl suspend; mode "default"
+    bindsym --release l exec --no-startup-id /usr/bin/slock; mode "default"
+    bindsym e exec i3-msg exit
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+Shift+e mode "default"
+}
+
+bindsym $mod+Shift+e mode "exit"
 
 focus_follows_mouse no
 

@@ -152,10 +152,10 @@
     stack_duplicates = true
 
     # Hide the count of merged notifications with the same content
-    hide_duplicate_count = false
+    hide_duplicate_count = true
 
     # Display indicators for URLs (U) and actions (A).
-    show_indicators = yes
+    show_indicators = no
 
     ### Icons ###
 
@@ -241,7 +241,7 @@
     history = ctrl+grave
 
     # Context menu.
-    context = ctrl+shift+period
+    context = ctrl+shift+grave
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.

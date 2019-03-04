@@ -87,21 +87,22 @@ label = %title:0:40:...%
 type = internal/date
 interval = 2.0
 date = %H:%M
-date-alt = %{F#666}%a%{F-} %d %b %Y
+date-alt = %{F#666}%a%{F-} %e %b %Y
 
 [module/volume]
 type = internal/pulseaudio
 use-ui-max = false
 
-;format-volume = <ramp-volume> <label-volume>
+;format-volume =  <bar-volume> <label-volume>
 format-volume =  <label-volume>
 
 label-muted =  muted
 label-muted-foreground = #666
 
-ramp-volume-0 = 
-ramp-volume-1 = 
-ramp-volume-2 = 
+bar-volume-width = 6
+bar-volume-fill = -
+bar-volume-indicator = +
+bar-volume-empty = -
 
 [module/cpu]
 type = internal/cpu

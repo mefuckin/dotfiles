@@ -1,0 +1,74 @@
+[icons]
+name = "none"
+
+[icons.overrides]
+memory_mem = " RAM "
+bat_full = " FULL"
+
+[theme]
+name = "gruvbox-dark"
+
+[theme.overrides]
+separator = ""
+idle_bg = "#3c3836"
+idle_fg = "#d5c4a1"
+info_bg = "#b8bb26"
+info_fg = "#282828"
+good_bg = "#8ec07c"
+good_fg = "#282828"
+warning_bg = "#fabd2f"
+warning_fg = "#282828"
+critical_bg = "#fb4934"
+critical_fg = "#282828"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%R"
+
+[[block]]
+block = "time"
+interval = 60
+format = "%a %d %b"
+
+[[block]]
+block = "cpu"
+interval = 1
+
+[[block]]
+block = "memory"
+display_type = "memory"
+format_mem = "{Mug} GiB"
+format_swap = "{SUg} GiB"
+clickable = false
+
+[[block]]
+block = "disk_space"
+path = "/"
+alias = "/"
+info_type = "used"
+unit = "GB"
+interval = 20
+warning = 20.0
+alert = 10.0
+
+[[block]]
+block = "pacman"
+
+[[block]]
+block = "net"
+device = "wlo1"
+ssid = true
+bitrate = true
+speed_up = false
+speed_down = false
+
+[[block]]
+block = "sound"
+on_click = "pavucontrol"
+
+[[block]]
+block = "battery"
+device = "BAT1"
+format = "{percentage}%"
+interval = 10

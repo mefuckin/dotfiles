@@ -39,8 +39,15 @@ set cursorline
 " reload file on change
 set autoread
 
-colorscheme solarized8
-" https://github.com/lifepillar/vim-solarized8
+" true color terminal
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+let g:gruvbox_italic=0
+"let g:gruvbox_contrast_dark='hard'
+
+colorscheme gruvbox
 
 set background=dark
 
@@ -52,7 +59,7 @@ if has("gui_running")
 endif
 
 " automatically re-read config
-autocmd! bufwritepost ~/.vim/vimrc source ~/.vim/vimrc
+"autocmd! bufwritepost ~/.vimrc source ~/.vimrc
 
 " always show status line
 set laststatus=2
@@ -60,6 +67,4 @@ set laststatus=2
 " disable mode indicator since we have lightline
 set noshowmode
 
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ }
+let g:lightline = {'colorscheme': 'gruvbox'}

@@ -1,1 +1,16 @@
-font=xos4 Terminus 10
+font=xos4 Terminus 12
+
+[urgency="low"]
+background-color=#3c3836
+border-color=#3c3836
+text-color=#d5c4a1
+
+[urgency="normal"]
+background-color=#83a598
+border-color=#83a598
+text-color=#282828
+
+[urgency="high"]
+background-color=#fb4934
+border-color=#fb4934
+text-color=#282828

@@ -48,8 +48,6 @@ set $term termite
 # Note: it's recommended that you pass the final command to sway
 set $menu dmenu_path | dmenu | xargs swaymsg exec
 
-set $locker swaylock -f -c 000000
-
 ### Output configuration
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
@@ -67,10 +65,10 @@ output eDP-1 disable
 ### Idle configuration
 
 exec swayidle -w \
-     timeout 300 $locker \
+     timeout 300 'swaylock -f -c 000000' \
      timeout 600 'swaymsg "output * dpms off"' \
           resume 'swaymsg "output * dpms on"' \
-    before-sleep $locker
+    before-sleep 'swaylock -f -c 000000'
 
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
@@ -198,9 +196,9 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 # run calculator
 bindsym XF86Calculator exec gnome-calculator
 
-# hide mako notifications (Mod1 is Alt)
-bindsym $mod+Ctrl+Space exec makoctl dismiss
-bindsym $mod+Ctrl+Shift+Space exec makoctl dismiss --all
+# hide mako notifications
+bindsym $mod+x exec makoctl dismiss
+bindsym $mod+Shift+x exec makoctl dismiss --all
 
 mode "resize" {
     # left will shrink the containers width
@@ -229,7 +227,7 @@ mode "exit" {
     bindsym p exec systemctl poweroff
     bindsym r exec systemctl reboot
     bindsym s exec systemctl suspend; mode "default"
-    bindsym --release l exec $locker; mode "default"
+    bindsym --release l exec 'swaylock -f -c 000000'; mode "default"
     bindsym x exec swaymsg exit
 
     bindsym Return mode "default"
@@ -287,8 +285,8 @@ exec msm_notifier
 exec telegram-desktop
 exec thunderbird
 
-exec --no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
-exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh
-exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=pkcs11
+#exec -no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+#exec /usr/bin/gnome-keyring-daemon --start --components=ssh,secrets,pkcs11
 
 include /etc/sway/config.d/*

@@ -3,12 +3,11 @@ set nocompatible
 
 set langmenu=en_US.UTF-8
 
-" enable the mouse in all modes
+" enable mouse in all modes
 set mouse=a
 
 " Mouse handling for the terminal that emits SGR-styled mouse reporting.
-" Fixes scrolling in st.
-" See :h ttymouse and https://github.com/vim/vim/issues/2419.
+" Fixes scrolling in st. See :h ttymouse and https://github.com/vim/vim/issues/2419
 set ttymouse=sgr
 
 set keymap=russian-jcukenwin
@@ -19,8 +18,8 @@ set encoding=utf-8
 set termencoding=utf-8
 
 set tabstop=8
-set expandtab
 set softtabstop=4
+set expandtab
 
 " show line numbers
 set nu
@@ -41,13 +40,15 @@ set autoread
 
 " true color terminal
 set termguicolors
+
+" this magic is needed to have colors inside tmux
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
+colorscheme gruvbox
+
 let g:gruvbox_italic=0
 "let g:gruvbox_contrast_dark='hard'
-
-colorscheme gruvbox
 
 set background=dark
 

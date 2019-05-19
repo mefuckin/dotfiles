@@ -6,7 +6,7 @@ font pango:xos4 Terminus 8
 default_border pixel 1
 default_floating_border none
 focus_follows_mouse no
-hide_edge_borders both
+hide_edge_borders smart
 titlebar_padding 6 3
 
 ### Colors
@@ -36,17 +36,18 @@ set $base0F #d65d0e
 set $mod Mod4
 
 # Home row direction keys, like vim
-set $left h
-set $down j
-set $up k
-set $right l
+# (43 = h, 44 = j, 45 = k, 46 = l)
+set $left 43
+set $down 44
+set $up 45
+set $right 46
 
 # Your preferred terminal emulator
 set $term termite
 
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | dmenu | xargs swaymsg exec
+set $menu j4-dmenu-desktop --dmenu='bemenu -i --fn "xos4 Terminus 10"' --no-generic --term='termite' | xargs swaymsg exec
 
 ### Output configuration
 
@@ -54,7 +55,7 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 output * bg ~/Изображения/beat-schuler-175124-unsplash.jpg fill
 
-output eDP-1 disable
+#output eDP-1 disable
 
 # Example configuration:
 #
@@ -97,11 +98,12 @@ input * xkb_numlock enabled
 # start a terminal
 bindsym $mod+Return exec $term
 
-# kill focused window
-bindsym $mod+Shift+q kill
+# kill focused window (24 = q)
+bindcode $mod+Shift+24 kill
+bindsym $mod+Escape kill
 
-# start your launcher
-bindsym $mod+d exec $menu
+# start your launcher (40 = d)
+bindcode $mod+40 exec $menu
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -110,23 +112,23 @@ bindsym $mod+d exec $menu
 # mouse button for dragging.
 floating_modifier $mod normal
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
+# reload the configuration file (54 = c)
+bindcode $mod+Shift+54 reload
 
-bindsym $mod+$left focus left
-bindsym $mod+$down focus down
-bindsym $mod+$up focus up
-bindsym $mod+$right focus right
+bindcode $mod+$left focus left
+bindcode $mod+$down focus down
+bindcode $mod+$up focus up
+bindcode $mod+$right focus right
 
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-bindsym $mod+Shift+$left move left
-bindsym $mod+Shift+$down move down
-bindsym $mod+Shift+$up move up
-bindsym $mod+Shift+$right move right
+bindcode $mod+Shift+$left move left
+bindcode $mod+Shift+$down move down
+bindcode $mod+Shift+$up move up
+bindcode $mod+Shift+$right move right
 
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
@@ -157,16 +159,18 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 # You can "split" the current object of your focus with $mod+b
 # or $mod+v, for horizontal and vertical splits respectively.
-bindsym $mod+b splith
-bindsym $mod+v splitv
+# (55 = v, 56 = b)
+bindcode $mod+56 splith
+bindcode $mod+55 splitv
 
 # Switch the current container between different layout styles
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+# (25 = w, 26 = e, 39 = s)
+bindcode $mod+39 layout stacking
+bindcode $mod+25 layout tabbed
+bindcode $mod+26 layout toggle split
 
-# Make the current focus fullscreen
-bindsym $mod+f fullscreen
+# Make the current focus fullscreen (41 = f)
+bindcode $mod+41 fullscreen
 
 # Toggle the current focus between tiling and floating mode
 bindsym $mod+Shift+space floating toggle
@@ -174,8 +178,8 @@ bindsym $mod+Shift+space floating toggle
 # Swap focus between the tiling area and the floating area
 bindsym $mod+space focus mode_toggle
 
-# Move focus to the parent container
-bindsym $mod+a focus parent
+# Move focus to the parent container (38 = a)
+bindcode $mod+38 focus parent
 
 # Move the currently focused window to the scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -183,6 +187,9 @@ bindsym $mod+Shift+minus move scratchpad
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus scratchpad show
+
+# make screenshot
+bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
 
 # increase sound volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
@@ -196,19 +203,19 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 # run calculator
 bindsym XF86Calculator exec gnome-calculator
 
-# hide mako notifications
-bindsym $mod+x exec makoctl dismiss
-bindsym $mod+Shift+x exec makoctl dismiss --all
+# hide mako notifications (53 = x)
+bindcode $mod+53 exec makoctl dismiss
+bindcode $mod+Shift+53 exec makoctl dismiss --all
 
 mode "resize" {
     # left will shrink the containers width
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10px
-    bindsym $down resize grow height 10px
-    bindsym $up resize shrink height 10px
-    bindsym $right resize grow width 10px
+    bindcode $left resize shrink width 10px
+    bindcode $down resize grow height 10px
+    bindcode $up resize shrink height 10px
+    bindcode $right resize grow width 10px
 
     # ditto, with arrow keys
     bindsym Left resize shrink width 10px
@@ -219,22 +226,24 @@ mode "resize" {
     # return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $mod+r mode "default"
+    bindcode $mod+27 mode "default"
 }
-bindsym $mod+r mode "resize"
+# 27 = r
+bindcode $mod+27 mode "resize"
 
 mode "exit" {
-    bindsym p exec systemctl poweroff
-    bindsym r exec systemctl reboot
-    bindsym s exec systemctl suspend; mode "default"
-    bindsym --release l exec 'swaylock -f -c 000000'; mode "default"
-    bindsym x exec swaymsg exit
+    bindcode 33 exec systemctl poweroff  # 33 = p
+    bindcode 27 exec systemctl reboot  # 27 = r
+    bindcode 39 exec systemctl suspend; mode "default"  # 39 = s
+    bindcode --release 46 exec 'swaylock -f -c 000000'; mode "default"  # 46 = l
+    bindcode 53 exec swaymsg exit  # 53 = x
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
-    bindsym $mod+Shift+e mode "default"
+    bindcode $mod+Shift+26 mode "default"
 }
-bindsym $mod+Shift+e mode "exit"
+# 26 = e
+bindcode $mod+Shift+26 mode "exit"
 
 # Status bar
 # Read `man 5 sway-bar` for more information about this section.
@@ -261,7 +270,7 @@ bar {
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
-client.focused          $base0D $base0D $base00 $base0D $base0C
+client.focused          $base0D $base0D $base00 $base0C $base0D
 client.focused_inactive $base01 $base01 $base05 $base03 $base01
 client.unfocused        $base00 $base00 $base05 $base01 $base01
 client.urgent           $base08 $base08 $base00 $base08 $base08

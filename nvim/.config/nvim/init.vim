@@ -8,8 +8,9 @@ set mouse=a
 
 " Mouse handling for the terminal that emits SGR-styled mouse reporting.
 " Fixes scrolling in st. See :h ttymouse and https://github.com/vim/vim/issues/2419
-set ttymouse=sgr
+"set ttymouse=sgr
 
+set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 set keymap=russian-jcukenwin
 set iminsert=0
 set imsearch=0
@@ -17,8 +18,13 @@ set imsearch=0
 set encoding=utf-8
 set termencoding=utf-8
 
-set tabstop=8
-set softtabstop=4
+" soft wrapping
+set wrap
+set linebreak
+set nolist
+
+set tabstop=4
+"set softtabstop=4
 set expandtab
 
 " show line numbers

@@ -1,0 +1,8 @@
+laptop {
+    output eDP-1 enable
+}
+
+home {
+    output eDP-1 disable
+    output "Philips Consumer Electronics Company PHL 240V5A UK01646010076" enable
+}

@@ -4,13 +4,13 @@
 include config.d/*
 
 # Preferred terminal emulator
-set $term termite
+set $term alacritty
 
 # Application launcher
 # It's recommended that you pass the final command to sway
 set $menu j4-dmenu-desktop \
     --dmenu='bemenu --ignorecase \
-        --fn "xos4 Terminus 10" \
+        --fn "Terminus 10" \
         --tb "$dark1" --tf "$light4" \
         --fb "$dark0" --ff "$light0" \
         --hb "$dark0" --hf "$neutral_yellow" \
@@ -54,10 +54,8 @@ input type:touchpad {
 
 output * bg ~/Изображения/beat-schuler-175124-unsplash.jpg fill
 
-# Disable laptop display when lid closed
-bindswitch lid:on output eDP-1 disable
-bindswitch lid:off output eDP-1 enable
-
+# Dynamic output configuration daemon
+exec kanshi
 
 ### Idle configuration
 
@@ -107,6 +105,7 @@ bindsym --to-code {
     $mod+Shift+$right move right
 }
 
+# conflicts with JetBrains IDEs
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -129,7 +128,7 @@ bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
 
 # Switch to the previously focused workspace
-bindsym $mod+grave workspace back_and_forth
+bindsym --to-code $mod+grave workspace back_and_forth
 
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
@@ -163,11 +162,13 @@ bindsym $mod+space focus mode_toggle
 bindsym --to-code $mod+a focus parent
 
 # Move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move container to scratchpad
+bindsym $mod+Shift+minus mark "scratchpad", move to scratchpad
 
 # Show the next scratchpad window or hide the focused scratchpad window.
 # If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
+bindsym $mod+minus [con_mark="scratchpad"] scratchpad show
+
+for_window [class="^TelegramDesktop$" title="Telegram"] move to scratchpad
 
 bindsym $mod+F1 [class="^TelegramDesktop$"] scratchpad show
 
@@ -238,8 +239,10 @@ bindsym --to-code $mod+Shift+e mode "exit"
 floating_modifier $mod normal
 
 
-font pango:xos4 Terminus 8
+font pango:Terminus 8
+#font monospace 8
 focus_follows_mouse no
+smart_borders no_gaps
 
 
 ### Client colors
@@ -250,6 +253,14 @@ client.focused_inactive  $dark4         $dark3       $light2  $gray         $dar
 client.unfocused         $dark2         $dark1       $light4  $gray         $dark1
 client.urgent            $neutral_red   $faded_red   $light0  $bright_red   $faded_red
 
+# Basic color configuration using the Base16 variables for windows and borders.
+# Property Name         Border  BG      Text    Indicator Child Border
+#client.focused          $base05 $base0D $base00 $base0D $base0D
+#client.focused_inactive $base01 $base01 $base05 $base03 $base01
+#client.unfocused        $base01 $base00 $base05 $base01 $base01
+#client.urgent           $base08 $base08 $base00 $base08 $base08
+#client.placeholder      $base00 $base00 $base05 $base00 $base00
+#client.background       $base07
 
 ### Status bar
 
@@ -272,20 +283,33 @@ bar {
         urgent_workspace    $neutral_red     $faded_red     $light0
         binding_mode        $faded_red       $faded_red     $light0
     }
+    #colors {
+    #    background $base00
+    #    separator  $base01
+    #    statusline $base04
+
+    #    # State             Border  BG      Text
+    #    focused_workspace   $base05 $base0D $base00
+    #    active_workspace    $base05 $base03 $base00
+    #    inactive_workspace  $base03 $base01 $base05
+    #    urgent_workspace    $base08 $base08 $base00
+    #    binding_mode        $base00 $base0A $base00
+    #}
+
 }
 
 
 assign [app_id="firefox"] 2
 assign [class="PyCharm"] 3
+assign [class="java-lang-Thread"] 3
 assign [class="jetbrains-pycharm"] 3
 assign [class="Thunderbird"] 10
 
-for_window [class="^TelegramDesktop$" title="Telegram"] move scratchpad
 
 # Notification daemon
 exec mako
 
-exec msm_notifier
+#exec msm_notifier
 exec telegram-desktop
 exec thunderbird
 

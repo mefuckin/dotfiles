@@ -1,77 +1,79 @@
-" be iMproved (nocompatible with vi)
-set nocompatible
+call plug#begin()
 
-set langmenu=en_US.UTF-8
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'jiangmiao/auto-pairs'
+" Plug 'kristijanhusak/vim-dirvish-git'
+Plug 'airblade/vim-gitgutter'
+Plug 'chriskempson/base16-vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'itchyny/lightline.vim'
+Plug 'justinmk/vim-dirvish'
+Plug 'lervag/vimtex'
+Plug 'rstacruz/vim-closer'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vimwiki/vimwiki'
 
-" enable mouse in all modes
-set mouse=a
+call plug#end()
 
-" Mouse handling for the terminal that emits SGR-styled mouse reporting.
-" Fixes scrolling in st. See :h ttymouse and https://github.com/vim/vim/issues/2419
-"set ttymouse=sgr
+colorscheme base16-tomorrow-night-eighties
 
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-set keymap=russian-jcukenwin
-set iminsert=0
-set imsearch=0
-
-set encoding=utf-8
-set termencoding=utf-8
-
-" soft wrapping
-set wrap
-set linebreak
-set nolist
-
+set cursorline " highlight current line
+set hidden
+set nomodeline
+set noshowmode " disable mode indicator (since i have lightline)
+set number " show line numbers
+set spelllang=ru_yo,ru_ru,en_us
 set tabstop=4
-"set softtabstop=4
-set expandtab
+set termguicolors " true color terminal
 
-" show line numbers
-set nu
-
-filetype plugin on
-filetype indent on
-
-syntax enable
-
-set listchars=tab:··
-set list
-
-" highlight current line
-set cursorline
-
-" reload file on change
-set autoread
-
-" true color terminal
-set termguicolors
+set langmap=ёйцукенгшщзхъфывапролджэячсмитьбюЁЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;
+						\`qwertyuiop[]asdfghjkl\\;'zxcvbnm\\,.~QWERTYUIOP{}ASDFGHJKL:\\"ZXCVBNM<>
 
 " this magic is needed to have colors inside tmux
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-colorscheme gruvbox
+nmap <silent> <c-k> :wincmd k<CR>
+nmap <silent> <c-j> :wincmd j<CR>
+nmap <silent> <c-h> :wincmd h<CR>
+nmap <silent> <c-l> :wincmd l<CR>
 
-let g:gruvbox_italic=0
-"let g:gruvbox_contrast_dark='hard'
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
 
-set background=dark
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
 
-if has("gui_running")
-  set lines=50 columns=100
-  set guioptions-=L         " disable left scrollbar
-  set guioptions-=e         " disable GUI tabs (make it as in console)
-  set guioptions-=T         " disable toolbar
-endif
+" set list
+" set listchars=trail:◦
 
-" automatically re-read config
-"autocmd! bufwritepost ~/.vimrc source ~/.vimrc
+" function! OnTabEnter(path)
+" 	if isdirectory(a:path)
+" 		let dirname = a:path
+" 	else
+" 		let dirname = fnamemodify(a:path, ":h")
+" 	endif
+" 	execute "tcd ". dirname
+" endfunction()
 
-" always show status line
-set laststatus=2
+" autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 
-" disable mode indicator since we have lightline
-set noshowmode
 
-let g:lightline = {'colorscheme': 'gruvbox'}
+" CtrlP
+" let g:ctrlp_cmd = 'CtrlPBuffer'
+
+" Lightline
+let g:lightline = {'colorscheme': 'Tomorrow_Night_Eighties'}
+
+" Vimtex
+let g:vimtex_compiler_progname = 'nvr'
+
+" Vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'default', 'ext': '.wiki'}]

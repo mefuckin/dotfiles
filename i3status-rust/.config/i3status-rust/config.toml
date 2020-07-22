@@ -4,32 +4,38 @@ name = "none"
 [icons.overrides]
 memory_mem = " RAM "
 bat_full = " FULL"
+update = " ^ "
 
 [theme]
 name = "gruvbox-dark"
 
 [theme.overrides]
 separator = ""
-idle_bg = "#3c3836"
-idle_fg = "#d5c4a1"
-info_bg = "#b8bb26"
-info_fg = "#282828"
-good_bg = "#8ec07c"
-good_fg = "#282828"
-warning_bg = "#fabd2f"
-warning_fg = "#282828"
-critical_bg = "#fb4934"
-critical_fg = "#282828"
+idle_bg = "#3c3836"      # dark1
+idle_fg = "#ebdbb2"      # light1
+info_bg = "#076678"      # faded blue
+info_fg = "#ebdbb2"      # light1
+good_bg = "#79740e"      # faded green
+good_fg = "#ebdbb2"      # light1
+
+warning_bg = "#fabd2f"   # bright yellow
+warning_fg = "#3c3836"   # dark1
+critical_bg = "#fb4934"  # bright red
+critical_fg = "#3c3836"  # dark1
 
 [[block]]
 block = "time"
-interval = 60
+interval = 30
 format = "%R"
 
 [[block]]
 block = "time"
-interval = 60
+interval = 30
 format = "%a %d %b"
+
+#[[block]]
+#block = "keyboard_layout"
+#driver = "localebus"
 
 [[block]]
 block = "cpu"
@@ -56,12 +62,7 @@ alert = 10.0
 block = "pacman"
 
 [[block]]
-block = "net"
-device = "wlo1"
-ssid = true
-bitrate = true
-speed_up = false
-speed_down = false
+block = "networkmanager"
 
 [[block]]
 block = "sound"
@@ -71,4 +72,4 @@ on_click = "pavucontrol"
 block = "battery"
 device = "BAT1"
 format = "{percentage}%"
-interval = 10
+interval = 5

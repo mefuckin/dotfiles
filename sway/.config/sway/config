@@ -55,7 +55,21 @@ input type:touchpad {
 output * bg ~/Изображения/beat-schuler-175124-unsplash.jpg fill
 
 # Dynamic output configuration daemon
-exec kanshi
+#exec kanshi
+
+set $laptop eDP-1
+set $monitor VGA-1
+
+output $monitor position 0,0
+output $laptop position 1920,312
+
+# Clamshell mode aka closed display mode
+bindswitch --reload lid:on output $laptop disable
+bindswitch --reload lid:off output $laptop enable
+
+
+focus output $monitor
+
 
 ### Idle configuration
 
@@ -116,6 +130,10 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+#bindsym --to-code $mod+Shift+m move workspace to output right
+bindsym --to-code $mod+Shift+F11 move workspace to output $monitor
+bindsym --to-code $mod+Shift+F12 move workspace to output $laptop
+
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -168,9 +186,13 @@ bindsym $mod+Shift+minus mark "scratchpad", move to scratchpad
 # If there are multiple scratchpad windows, this command cycles through them.
 bindsym $mod+minus [con_mark="scratchpad"] scratchpad show
 
-for_window [class="^TelegramDesktop$" title="Telegram"] move to scratchpad
+for_window [app_id="telegramdesktop" title="Telegram"] move to scratchpad
+for_window [app_id="telegramdesktop" title="Telegram"] resize set 900 800
 
-bindsym $mod+F1 [class="^TelegramDesktop$"] scratchpad show
+bindsym $mod+F3 [app_id="telegramdesktop"] scratchpad show
+
+bindsym $mod+F5 exec caja
+bindsym $mod+F6 exec firefox
 
 # hide mako notifications
 bindsym --to-code $mod+x exec makoctl dismiss
@@ -221,7 +243,7 @@ mode "exit" {
     bindsym --to-code p exec systemctl poweroff; mode "default"
     bindsym --to-code r exec systemctl reboot; mode "default"
     bindsym --to-code s exec systemctl suspend; mode "default"
-    bindsym --to-code --release l exec '$locker'; mode "default"
+    bindsym --to-code l exec '$locker'; mode "default"
     bindsym --to-code x exec swaymsg exit
 
     bindsym Return mode "default"
@@ -241,17 +263,17 @@ floating_modifier $mod normal
 
 font pango:Terminus 8
 #font monospace 8
-focus_follows_mouse no
+#focus_follows_mouse no
 smart_borders no_gaps
 
 
 ### Client colors
 
 # property               border         bg           text     indicator     child border
-client.focused           $neutral_blue  $faded_blue  $light0  $bright_blue  $faded_blue
-client.focused_inactive  $dark4         $dark3       $light2  $gray         $dark3
-client.unfocused         $dark2         $dark1       $light4  $gray         $dark1
-client.urgent            $neutral_red   $faded_red   $light0  $bright_red   $faded_red
+#client.focused           $neutral_blue  $faded_blue  $light0  $bright_blue  $faded_blue
+#client.focused_inactive  $dark4         $dark3       $light2  $gray         $dark3
+#client.unfocused         $dark2         $dark1       $light4  $gray         $dark1
+#client.urgent            $neutral_red   $faded_red   $light0  $bright_red   $faded_red
 
 # Basic color configuration using the Base16 variables for windows and borders.
 # Property Name         Border  BG      Text    Indicator Child Border
@@ -267,7 +289,8 @@ client.urgent            $neutral_red   $faded_red   $light0  $bright_red   $fad
 # Read `man 5 sway-bar` for more information about this section.
 
 bar {
-    status_command i3status-rs ~/.config/i3status-rust/config.toml
+    #status_command i3status-rs ~/.config/i3status-rust/config.toml
+    status_command i3status -c ~/.config/i3status/i3status.conf
     position top
     separator_symbol "  "
     status_padding 0
@@ -277,11 +300,11 @@ bar {
         background $dark0
 
         # state             border           bg             text
-        focused_workspace   $neutral_blue    $faded_blue    $light0
-        active_workspace    $dark4           $dark3         $light2
-        inactive_workspace  $dark2           $dark1         $light4
-        urgent_workspace    $neutral_red     $faded_red     $light0
-        binding_mode        $faded_red       $faded_red     $light0
+        #focused_workspace   $neutral_blue    $faded_blue    $light0
+        #active_workspace    $dark4           $dark3         $light2
+        #inactive_workspace  $dark2           $dark1         $light4
+        #urgent_workspace    $neutral_red     $faded_red     $light0
+        #binding_mode        $faded_red       $faded_red     $light0
     }
     #colors {
     #    background $base00
@@ -300,11 +323,12 @@ bar {
 
 
 assign [app_id="firefox"] 2
+assign [class="firefox"] 2
 assign [class="PyCharm"] 3
 assign [class="java-lang-Thread"] 3
 assign [class="jetbrains-pycharm"] 3
+assign [app_id="transmission-gtk"] 9
 assign [class="Thunderbird"] 10
-
 
 # Notification daemon
 exec mako
@@ -312,6 +336,7 @@ exec mako
 #exec msm_notifier
 exec telegram-desktop
 exec thunderbird
+#exec transmission-gtk
 
 #exec -no-startup-id /usr/lib/mate-polkit/polkit-mate-authentication-agent-1
 exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
